@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+    <changeSet id="create-tables" author="you">
+        <createTable tableName="bankAccount">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+<!--            <column name="title" type="VARCHAR(255)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+            <column name="name" type="VARCHAR(10000)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add transaction table" author="mhernandez">
+        <createTable tableName="transaction">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="amount" type="double">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add transaction fk constraint" author="mhernandez">
+        <addForeignKeyConstraint baseTableName="transaction" baseColumnNames="bank_account_id"
+                                 constraintName="transaction_bank_account_fk"
+                                 referencedTableName="bank_account"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+<!--    change set to the Liquibase changelog to create a foreign key constraint between the bank_account_id column in the transaction table and the id column in the bank_account table:-->
+
+    <changeSet id="create user table" author="mhernandez">
+        <createTable tableName="user">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar">
+<!--                <constraints nullable="false"/>-->
+            </column>
+            <column name="middle_name" type="varchar"/>
+            <column name="last_name" type="varchar"/>
+        </createTable>
+    </changeSet>
+<!--    Add a new addColumn element to the BankAccount table to define the foreign key column that references the User table's id column. For example, to add a user_id column to the BankAccount table, you might add the following XML code:-->
+    <changeSet id="add bank account user id column" author="mhernandez">
+        <addColumn tableName="bank_account">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="add bank account user fk" author="mhernandez">
+        <addForeignKeyConstraint baseTableName="bank_account" baseColumnNames="user_id"
+                                 constraintName="fk_bank_account_user"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+<!--    Add a new addForeignKeyConstraint element to define the foreign key constraint. For example, to create a foreign key constraint between the BankAccount table's user_id column and the User table's id column, you might add the following XML code:-->
+
+
+</databaseChangeLog>
