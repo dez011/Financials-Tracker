@@ -5,6 +5,7 @@ import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserDTO;
 import com.example.demo.factory.UserFactory;
+import com.example.demo.factory.UserFactoryHolder;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,7 +42,7 @@ public class UserService implements UserServiceIF {
     @Transactional
     public User createUser(UserDTO dto) {
         consoleHandler.setLevel(Level.ALL);
-        User user = UserFactory.createFromDTO(dto);
+        User user = UserFactoryHolder.getUserFactory().createFromDTO(dto);
 
         User savedUser = userRepository.saveNewUser(user);
         LOGGER.info(String.format("\nCreated user with id %d", savedUser.id));

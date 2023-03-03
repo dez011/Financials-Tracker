@@ -10,7 +10,6 @@ public class ExternalJsonServiceImpl implements ExternalJsonService{
 
     @Override
     public void processExternalParsedJson(ExternalUserTransaction externalJsonTransaction) {
-        UserDTO userDTO = externalJsonTransaction.buildUser();
-//        System.out.println(userDTO.toString());
+        externalJsonTransaction.buildUser();
     }
 }

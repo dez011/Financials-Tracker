@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import org.json.JSONObject;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -30,6 +32,11 @@ public class BankAccount {
         this.accountType = dto.accountType;
         this.user = user;
 
+    }
+
+    public BankAccount(JSONObject jsonArray) {
+
+//        this.accountType = jsonArray.
     }
 
     public BankAccountDTO toDTO() {
